@@ -52,7 +52,7 @@ function Login(props){
     }
     return (
         <div className={classes.root}>
-            <header style={{marginTop: '-30px', marginBottom: '50px' ,width: '100%',height: '20%', fontSize: '40px', color: '#dc143c', fontFamily: 'monospace'}}>Mern App</header>
+            <header style={{marginTop: '-30px', marginBottom: '50px' ,width: '100%',height: '20%', fontSize: '40px', color: '#dc143c', fontFamily: 'monospace'}}>LT-LGTime</header>
             <Paper  className={classes.paper} >
                 <div className={classes.field}><TextField id="username" name="username" label="Email*" variant="outlined" onChange={(e) => setUsername(e.target.value)}/></div>
                 <div className={classes.field}><TextField id="password" name="password" label="Password*" type='password' variant="outlined" onChange={(e) => setPassword(e.target.value)}/></div>
