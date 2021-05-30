@@ -3,7 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "client": "cd client && npm start",
+    "build": "cd client && npm run build",
+    "install-client": "cd client && npm install",
+    "start": "node ./bin/www",
+    "dev": "concurrently -n 'server,client' -c 'green,blue' \"nodemon ./bin/www\" \"npm run client\"",
+    "heroku-postbuild": "npm run install-client && npm run build"
   },
   "dependencies": {
     "cloudinary": "^1.25.2",
