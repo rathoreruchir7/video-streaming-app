@@ -19,3 +19,6 @@ export const UPDATE_REQUEST = "UPDATE_REQUEST";
 export const UPDATE_SUCCESS = "UPDATE_SUCCESS";
 export const UPDATE_FAILURE = "UPDATE_FAILURE";
 
+export const ADD_POSTS = "ADD_POSTS"
+export const POSTS_LOADING = "POSTS_LOADING"
+export const POSTS_FAILED = "POSTS_FAILED"

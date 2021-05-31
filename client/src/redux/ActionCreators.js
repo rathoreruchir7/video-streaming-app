@@ -311,3 +311,39 @@ export const logoutUser = (history) => (dispatch) => {
     dispatch(receiveLogout())
 }
 /*----------------------------------------------------------------------*/
+
+/*======================POSTS===========================*/
+export const fetchPosts = () => (dispatch) => {
+
+    dispatch(postsLoading(true));
+
+    axios({
+        url: '/posts',
+        method: 'GET',
+        headers: {
+            Authorization: bearer,
+            'Content-Type':'application/json',
+        },
+    })
+    .then((res) => {
+        console.log(res.data)
+        dispatch(postsDishes(res.data))
+    })
+    .catch((err) => dispatch(postsFailed(err)))
+};
+
+export const postsLoading = () => ({
+    type: ActionTypes.DISHES_LOADING
+});
+
+export const postsFailed = (errmess) => ({
+    type: ActionTypes.DISHES_FAILED,
+    payload: errmess
+});
+
+export const postsDishes = (posts) => ({
+    type: ActionTypes.ADD_POSTS,
+    payload: posts
+});
+
+/*==================================================================*/
