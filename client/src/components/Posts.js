@@ -12,6 +12,7 @@ import PostDetail from './PostDetail'
 import { fetchPosts } from '../redux/ActionCreators';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -105,23 +106,36 @@ function HideOnScroll(props) {
         }
     },[])
     
-    const list = posts.map((item) => {
-        <PostDetail item={item} />
-    })
-    return (
-        <div>
-        <HideOnScroll {...props}>
-        <AppBar>
-          <Toolbar>
-            <Typography variant="h6">Scroll to Hide App Bar</Typography>
-          </Toolbar>
-        </AppBar>
-        </HideOnScroll>
-      <div style={{height: '100vh', width: '600px', margin: "auto", overflow: 'hidden'}}>
-            {list}
-      </div>  
-      </div>
-    );
+    console.log("POSTS->",posts)
+    if(!spinner){
+        return (
+            <div>
+            <HideOnScroll {...props}>
+            <AppBar>
+              <Toolbar>
+                <Typography variant="h6">Scroll to Hide App Bar</Typography>
+              </Toolbar>
+            </AppBar>
+            </HideOnScroll>
+          <div style={{height: '100vh', width: '600px', margin: "auto", overflow: 'scroll'}}>
+             { 
+                posts.map((item) => {
+                    return <PostDetail  />
+                })
+             }
+          </div>  
+          </div>
+        );
+    }
+
+    else{
+        return (
+            <div className={classes.loaderRoot} style={{marginTop: '300px'}}>
+              <CircularProgress />
+            </div>        
+             );
+    }
+    
   }
 
 const mapStateToProps = state => {

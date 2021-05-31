@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
         width: '500px',
         flexDirection: 'column',
         justifyContent: 'space-around',
-        alignItems: "center",
+        alignItems: "flex-start",
         paddingLeft: "20px",
         
     },
@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
 
 function PostDetail(props){
     const classes = useStyles()
-    
+
     return (
         <div className={classes.root}>
         <Paper className={classes.paper}>
