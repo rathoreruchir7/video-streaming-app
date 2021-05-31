@@ -19,9 +19,11 @@ import { DialogContentText } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
+        flexDirection: 'column',
         flexWrap: 'wrap',
         marginTop: '100px',
         justifyContent: 'center',
+        alignItems: 'center',
         '& > *': {
             margin: theme.spacing(1),
             marginLeft: theme.spacing(2),
@@ -175,8 +177,7 @@ function Profile(props){
     const errorFunc=(err)=> {
         console.warn(`ERROR(${err.code}): ${err.message}`);
       }
-
-    
+      
     const handlePost = () => {
        if(localStorage.getItem("token")){
         setSpinner(true)
@@ -246,15 +247,16 @@ function Profile(props){
        else{
            console.log("token absent")
        }
-          
-        
     }
-
-   
-
         if(!spinner){
             return (
-                <div className={classes.root}>
+                <div className={classes.root} style={{marginTop: '0px'}}>
+                    <nav style={{marginLeft: 'auto', marginTop: '20px', height: 'fit-content', weight: 'fit-content'}}>
+                        <ul style={{listStyle: 'none', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around'}}>
+                            <li style={{cursor: 'pointer'}} onClick={() => props.history.push('/posts')}>Home</li>
+                            <li style={{cursor: 'pointer'}} >Logout</li>
+                        </ul>
+                    </nav>
                     <Dialog open={open} onClose={handleClose}>
                         <Avatar alt={name} src={`${avatar}`} style={{width: '100%', height: "100%"}} variant="square" />
                     </Dialog>
@@ -268,21 +270,20 @@ function Profile(props){
                         <DialogActions><Button variant='contained' color='primary' onClick={handlePost}>Post</Button></DialogActions>
                     </Dialog>
                     <Paper >
-                    <div className={classes.field}><Avatar alt="Remy Sharp" src={`${avatar}`} style={{width: '100px', height: "100px"}} onClick={handleClickOpen}/><input type="file" id="profile" name="profile" style={{display: isDisabled ? "none" : ""}} onChange={(e) => setProfile(e.target.files[0])}  /> </div>
+                    <div className={classes.field}><Avatar alt={name} src={`${avatar}`} style={{width: '100px', height: "100px"}} onClick={handleClickOpen}/><input type="file" id="profile" name="profile" style={{display: isDisabled ? "none" : ""}} onChange={(e) => setProfile(e.target.files[0])}  /> </div>
                        <div className={classes.field}>Name: <input className={classes.inputStyle} id="title" name="title" value={name} disabled={isDisabled} onChange={(e) => setName(e.target.value)} /></div>
                        <div className={classes.field}>Email: <input  className={classes.inputStyle} id="email" name="email" value={email} disabled={isDisabled} onChange={(e) => setEmail(e.target.value)} /></div>
         
                        <div className={classes.field}><Button variant="contained" color="primary"  disabled={edit} onClick={handleEdit} >Edit</Button><Button variant="contained" color="primary" onClick={handleSave} disabled={isDisabled}>Save</Button>  <Button variant="contained" color="primary" onClick={handleCreatePost}>
                         Create Post 
                     </Button></div>
-                       <span onClick={() => props.logoutUser(props.history)} style={{fontWeight: "bold", cursor: "pointer"}}>Logout</span>
+                       {/* <span onClick={() => props.logoutUser(props.history)} style={{fontWeight: "bold", cursor: "pointer"}}>Logout</span> */}
                     </Paper>
                    
                    
                 </div>
             );
         }
-
         else{
             return (
                 <div className={classes.loaderRoot} style={{marginTop: '300px'}}>

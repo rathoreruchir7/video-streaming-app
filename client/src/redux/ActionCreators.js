@@ -314,10 +314,10 @@ export const logoutUser = (history) => (dispatch) => {
 
 /*======================POSTS===========================*/
 export const fetchPosts = () => (dispatch) => {
-
+    const bearer = 'Bearer ' + localStorage.getItem('token');
     dispatch(postsLoading(true));
 
-    axios({
+    return axios({
         url: '/posts',
         method: 'GET',
         headers: {
@@ -327,21 +327,22 @@ export const fetchPosts = () => (dispatch) => {
     })
     .then((res) => {
         console.log(res.data)
-        dispatch(postsDishes(res.data))
+        dispatch(postPosts(res.data))
+        return res
     })
     .catch((err) => dispatch(postsFailed(err)))
 };
 
 export const postsLoading = () => ({
-    type: ActionTypes.DISHES_LOADING
+    type: ActionTypes.POSTS_LOADING
 });
 
 export const postsFailed = (errmess) => ({
-    type: ActionTypes.DISHES_FAILED,
+    type: ActionTypes.POSTS_FAILED,
     payload: errmess
 });
 
-export const postsDishes = (posts) => ({
+export const postPosts = (posts) => ({
     type: ActionTypes.ADD_POSTS,
     payload: posts
 });
