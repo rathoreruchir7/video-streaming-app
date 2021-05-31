@@ -3,14 +3,14 @@ const Schema = mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose');
 
 var Post = new Schema({
-    User: {
+    user: {
       type: mongoose.Types.ObjectId,
         default: null
     },
 
     userName: {
         type: String,
-        defulat: ''
+        default: ''
     },
 
     image: {

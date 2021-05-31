@@ -5,7 +5,7 @@ var Post = require('../models/post');
 var passport = require('passport');
 var authenticate = require('../authenticate');
 
-router.use(bodyParser.json());
+postRouter.use(bodyParser.json());
 /* GET users listing. */
 postRouter.get('/',authenticate.verifyUser, function(req, res, next) {
     Post.find({})

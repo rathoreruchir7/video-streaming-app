@@ -8,8 +8,12 @@ import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { set } from 'mongoose';
 import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { logoutUser, getProfile, uploadProfile, updateProfile } from '../redux/ActionCreators';
+import { DialogContentText } from '@material-ui/core';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -52,6 +56,8 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
     },
 
+ 
+
     inputStyle: {
         // fontWeight: 'bold'
     }
@@ -68,8 +74,12 @@ function Profile(props){
     const [isDisabled, setDisabled] = useState(true)
     const [edit, setEditDisabled] = useState(false)
     const [open, setOpen] = useState(false);
+    const [open1, setOpen1] = useState(false)
     const [spinner, setSpinner] = useState(false);
-
+    const [file, setFile] = useState('')
+    const [text, setText] = useState('')
+    const [location, setLocation] = useState('')
+ 
     useEffect(() => {
        
         setSpinner(true)
@@ -88,6 +98,14 @@ function Profile(props){
     
       const handleClose = () => {
         setOpen(false);
+      };
+
+      const handleCreatePost = () => {
+        setOpen1(true)
+    }
+
+      const handleClose1 = () => {
+        setOpen1(false);
       };
 
 
@@ -126,10 +144,78 @@ function Profile(props){
         //   })
     }
 
+
     const handleEdit=()=>{
         setEditDisabled(true)
         setDisabled(false)
     }
+
+
+    const handleInputFile = (e) => {
+        setFile(URL.createObjectURL(e.target.files[0]))
+    }
+
+    var options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+      };
+
+    const success=(pos)=> {
+        var crd = pos.coords;
+      
+        console.log('Your current position is:');
+        console.log(`Latitude : ${crd.latitude}`);
+        console.log(`Longitude: ${crd.longitude}`);
+        console.log(`More or less ${crd.accuracy} meters.`);
+      }
+      
+    const errorFunc=(err)=> {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+      }
+
+    
+    const handlePost = () => {
+       setSpinner(true)
+        axios.get('http://ip-api.com/json')
+        .then(
+            function success(response) {
+                console.log('User\'s Location Data is ', response.data.lat, response.data.lon);
+                console.log('User\'s Country', response.data.country);
+                setLocation(response.data.country)
+
+                const bearer = 'Bearer ' + localStorage.getItem('token');
+                const payload= {
+                    user: props.auth.user._id,
+                    userName: name,
+                    text: text,
+                    location: location
+                }
+                axios.post('/posts', {
+                    headers: {
+                        Authorization: bearer,
+                        'Content-Type':'application/json',
+                    },
+                    data: payload
+
+                })
+                .then((res) => {
+                    setSpinner(false)
+                    console.log("post created", res)
+                })
+                .catch((err) => console.log(err))
+            },
+      
+            function fail(data, status) {
+                console.log('Request failed.  Returned status of',
+                            status);
+            }
+        );
+          
+        
+    }
+
+   
 
         if(!spinner){
             return (
@@ -137,14 +223,26 @@ function Profile(props){
                     <Dialog open={open} onClose={handleClose}>
                         <Avatar alt={name} src={`${avatar}`} style={{width: '100%', height: "100%"}} variant="square" />
                     </Dialog>
+                    <Dialog open={open1} onClose={handleClose1}  >
+                        <DialogTitle>Create Post</DialogTitle>
+                        <DialogContent style={{display: 'flex', flexDirection: 'column', flexWrap: 'wrap', justifyContent: 'center'}}>
+                            <input type='file' name='imageFile' id='imageFile' onChange={(e) => handleInputFile(e)} />
+                            <img src={file} style={{marginTop: '20px', height: '200px', width: '200px'}} />
+                            <label for='text' style={{marginTop: '20px'}}>Describe</label><input type='textarea' id='text' name='text'   onChange={(e) => setText(e.target.value)} />
+                        </DialogContent>
+                        <DialogActions><Button variant='contained' color='primary' onClick={handlePost}>Post</Button></DialogActions>
+                    </Dialog>
                     <Paper >
                     <div className={classes.field}><Avatar alt="Remy Sharp" src={`${avatar}`} style={{width: '100px', height: "100px"}} onClick={handleClickOpen}/><input type="file" id="profile" name="profile" style={{display: isDisabled ? "none" : ""}} onChange={(e) => setProfile(e.target.files[0])}  /> </div>
                        <div className={classes.field}>Name: <input className={classes.inputStyle} id="title" name="title" value={name} disabled={isDisabled} onChange={(e) => setName(e.target.value)} /></div>
                        <div className={classes.field}>Email: <input  className={classes.inputStyle} id="email" name="email" value={email} disabled={isDisabled} onChange={(e) => setEmail(e.target.value)} /></div>
         
-                       <div className={classes.field}><Button variant="contained" color="primary"  disabled={edit} onClick={handleEdit} >Edit</Button><Button variant="contained" color="primary" onClick={handleSave} disabled={isDisabled}>Save</Button></div>
+                       <div className={classes.field}><Button variant="contained" color="primary"  disabled={edit} onClick={handleEdit} >Edit</Button><Button variant="contained" color="primary" onClick={handleSave} disabled={isDisabled}>Save</Button>  <Button variant="contained" color="primary" onClick={handleCreatePost}>
+                        Create Post 
+                    </Button></div>
                        <span onClick={() => props.logoutUser(props.history)} style={{fontWeight: "bold", cursor: "pointer"}}>Logout</span>
                     </Paper>
+                   
                    
                 </div>
             );
@@ -174,3 +272,4 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile))
+
