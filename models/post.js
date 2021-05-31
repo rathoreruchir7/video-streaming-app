@@ -4,8 +4,8 @@ const passportLocalMongoose = require('passport-local-mongoose');
 
 var Post = new Schema({
     user: {
-      type: mongoose.Types.ObjectId,
-        default: null
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
     },
 
     userName: {

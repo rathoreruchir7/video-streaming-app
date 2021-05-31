@@ -79,6 +79,7 @@ function Profile(props){
     const [file, setFile] = useState('')
     const [text, setText] = useState('')
     const [location, setLocation] = useState('')
+    const [postImage, setPostImage] = useState()
  
     useEffect(() => {
        
@@ -153,6 +154,7 @@ function Profile(props){
 
     const handleInputFile = (e) => {
         setFile(URL.createObjectURL(e.target.files[0]))
+        setPostImage(e.target.files[0])
     }
 
     var options = {
@@ -176,32 +178,60 @@ function Profile(props){
 
     
     const handlePost = () => {
-       setSpinner(true)
+       if(localStorage.getItem("token")){
+        setSpinner(true)
         axios.get('http://ip-api.com/json')
         .then(
             function success(response) {
                 console.log('User\'s Location Data is ', response.data.lat, response.data.lon);
-                console.log('User\'s Country', response.data.country);
+                console.log(response.data.country);
                 setLocation(response.data.country)
-
+                var location1 = response.data.country
                 const bearer = 'Bearer ' + localStorage.getItem('token');
-                const payload= {
-                    user: props.auth.user._id,
-                    userName: name,
-                    text: text,
-                    location: location
-                }
-                axios.post('/posts', {
+                console.log(props.auth.user._id)
+                
+                const formData = new FormData();
+                formData.append("imageFile", postImage)
+                console.log(postImage)
+                console.log(bearer)
+                axios({
+                    url: '/postImage',
+                    method: 'POST',
+                    data: formData,
                     headers: {
                         Authorization: bearer,
                         'Content-Type':'application/json',
                     },
-                    data: payload
-
                 })
                 .then((res) => {
-                    setSpinner(false)
-                    console.log("post created", res)
+                   console.log("POST URL-> ", res.data);
+                   var postURL = res.data;
+                   const payload = {
+                       user: props.auth.user._id,
+                       userName: name,
+                       location: location1,
+                       text: text,
+                       image: postURL
+                   }
+                   console.log(location)
+                   axios({
+                       url: '/posts',
+                       method: "POST",
+                       data: payload,
+                       headers: {
+                        Authorization: bearer,
+                        'Content-Type':'application/json',
+                    },
+                   })
+                   .then((res) => {
+                       console.log(res)
+                       setText('')
+                       setPostImage()
+                       setFile('')
+                       handleClose1()
+                       setSpinner(false)
+                   })
+                   
                 })
                 .catch((err) => console.log(err))
             },
@@ -211,6 +241,11 @@ function Profile(props){
                             status);
             }
         );
+       }
+
+       else{
+           console.log("token absent")
+       }
           
         
     }
@@ -228,7 +263,7 @@ function Profile(props){
                         <DialogContent style={{display: 'flex', flexDirection: 'column', flexWrap: 'wrap', justifyContent: 'center'}}>
                             <input type='file' name='imageFile' id='imageFile' onChange={(e) => handleInputFile(e)} />
                             <img src={file} style={{marginTop: '20px', height: '200px', width: '200px'}} />
-                            <label for='text' style={{marginTop: '20px'}}>Describe</label><input type='textarea' id='text' name='text'   onChange={(e) => setText(e.target.value)} />
+                            <label for='text' style={{marginTop: '20px'}}>Describe</label><input type='textarea' id='text' name='text'   onChange={(e) => {setText(e.target.value)} } />
                         </DialogContent>
                         <DialogActions><Button variant='contained' color='primary' onClick={handlePost}>Post</Button></DialogActions>
                     </Dialog>

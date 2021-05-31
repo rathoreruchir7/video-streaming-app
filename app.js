@@ -14,6 +14,7 @@ var usersRouter = require('./routes/users');
 var profileRouter = require('./routes/profile')
 var uploadRouter = require('./routes/uploadRouter');
 var postRouter = require('./routes/posts');
+var postImageRouter = require('./routes/postImage');
 
 var app = express();
 app.use(cors.cors);
@@ -57,6 +58,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/profile', profileRouter)
 app.use('/imageUpload',uploadRouter);
+app.use('/postImage', postImageRouter)
 app.use('/posts', postRouter);
 
 // catch 404 and forward to error handler
