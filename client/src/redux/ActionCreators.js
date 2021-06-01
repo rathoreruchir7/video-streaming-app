@@ -313,12 +313,12 @@ export const logoutUser = (history) => (dispatch) => {
 /*----------------------------------------------------------------------*/
 
 /*======================POSTS===========================*/
-export const fetchPosts = () => (dispatch) => {
+export const fetchPosts = (country) => (dispatch) => {
     const bearer = 'Bearer ' + localStorage.getItem('token');
     dispatch(postsLoading(true));
 
     return axios({
-        url: '/posts',
+        url: `/posts/${country}`,
         method: 'GET',
         headers: {
             Authorization: bearer,

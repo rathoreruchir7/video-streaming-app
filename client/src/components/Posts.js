@@ -13,6 +13,12 @@ import { fetchPosts } from '../redux/ActionCreators';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -59,6 +65,13 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'space-around',
         alignItems: "center",
     },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 120,
+      },
+      selectEmpty: {
+        marginTop: theme.spacing(2),
+      },
 
  
 
@@ -96,15 +109,21 @@ function HideOnScroll(props) {
     const classes = useStyles()
     const [spinner, setSpinner] = useState(true)
     const [posts, setPosts] = useState([])
+    const [country, setCountry] = useState('')
 
     useEffect(async() => {
-        const result = await props.fetchPosts()
+        const result = await props.fetchPosts(country)
         if(result.data){
             console.log(result.data)
             setPosts(result.data)
             setSpinner(false)
         }
-    },[])
+    },[country])
+
+    const handleSelectChange = (e) => {
+        setSpinner(true);
+        setCountry(e.target.value)
+    }
     
     console.log("POSTS->",posts)
     if(!spinner){
@@ -113,7 +132,19 @@ function HideOnScroll(props) {
             <HideOnScroll {...props}>
             <AppBar>
               <Toolbar>
-                <Typography variant="h6">Scroll to Hide App Bar</Typography>
+              
+              <Select
+                labelId="select-country"
+                id="select-country"
+                value={country}
+                onChange={handleSelectChange}
+                >
+                <MenuItem value='' selected={true}>All</MenuItem>
+                <MenuItem value='India'>India</MenuItem>
+                <MenuItem value='China'>China</MenuItem>
+                <MenuItem value='France'>France</MenuItem>
+                <MenuItem value='Germany'>Germany</MenuItem>
+            </Select>
               </Toolbar>
             </AppBar>
             </HideOnScroll>
@@ -147,7 +178,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => ({
    
-    fetchPosts: () => dispatch((fetchPosts())),
+    fetchPosts: (country) => dispatch((fetchPosts(country))),
    
 })
 
