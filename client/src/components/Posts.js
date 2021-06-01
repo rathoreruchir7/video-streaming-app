@@ -126,7 +126,7 @@ function HideOnScroll(props) {
         setCountry(e.target.value)
     }
 
-    
+    console.log("POSTS->",posts)
     
     if(!spinner){
         return (
