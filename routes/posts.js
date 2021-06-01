@@ -9,6 +9,7 @@ postRouter.use(bodyParser.json());
 /* GET users listing. */
 postRouter.get('/',authenticate.verifyUser, function(req, res, next) {
     Post.find({}).sort({ date: -1})
+    .populate('user')
     .then((posts) => {
       res.statusCode=200;
       res.setHeader("Content-Type", "application/json");
@@ -32,6 +33,7 @@ postRouter.post('/', authenticate.verifyUser, (req, res, next) => {
 
 postRouter.get('/:country', authenticate.verifyUser, (req, res, next) => {
     Post.find({ location: req.params.country })
+    .populate('user')
     .then((posts) => {
       res.statusCode=200;
       res.setHeader("Content-Type", "application/json");

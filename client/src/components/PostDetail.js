@@ -74,24 +74,42 @@ const useStyles = makeStyles((theme) => ({
 
 function PostDetail(props){
     const classes = useStyles()
+    const [spinner, setSpinner] = useState(true)
     console.log(props)
-    return (
-        <div className={classes.root}>
-        <Paper className={classes.paper}>
-            <div style={{marginBottom: '20px', display: 'flex', alignItems: 'center'}}>
-            <Avatar src={`${props.item.avatar}`} style={{width: '40px', height: "40px", marginRight: '10px'}} />
-             <div >{props.item.userName}</div>
+    useEffect(() => {
+        if(props.item.user){
+            setSpinner(false)
+        }
+    },[])
+
+    if(!spinner){
+        return (
+            <div className={classes.root}>
+            <Paper className={classes.paper}>
+                <div style={{marginBottom: '20px', display: 'flex', alignItems: 'center'}}>
+                <Avatar src={`${props.item.user.avatar}`} style={{width: '40px', height: "40px", marginRight: '10px'}} />
+                 <div >{props.item.userName}</div>
+                </div>
+                <div style={{marginBottom: '20px'}}>{props.item.location}</div>
+                <img src={props.item.image} style={{width: '80%', height: '80%', marginBottom: '20px'}}></img>
+                <div style={{marginBottom: '20px'}}>{props.item.text}</div>
+                <div>
+                    <span style={{marginRight: '20px'}}><FavoriteBorderIcon /></span>
+                    <span><ChatBubbleOutlineIcon /></span>
+                </div>
+            </Paper>
             </div>
-            <div style={{marginBottom: '20px'}}>{props.item.location}</div>
-            <img src={props.item.image} style={{width: '80%', height: '80%', marginBottom: '20px'}}></img>
-            <div style={{marginBottom: '20px'}}>{props.item.text}</div>
-            <div>
-                <span style={{marginRight: '20px'}}><FavoriteBorderIcon /></span>
-                <span><ChatBubbleOutlineIcon /></span>
-            </div>
-        </Paper>
-        </div>
-    );
+        );
+    }
+
+    else{
+        return (
+            <div className={classes.loaderRoot} style={{marginTop: '300px'}}>
+              <CircularProgress />
+            </div>        
+             );
+    }
+   
 }
 
 export default PostDetail
