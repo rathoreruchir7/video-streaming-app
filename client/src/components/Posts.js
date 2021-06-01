@@ -112,6 +112,7 @@ function HideOnScroll(props) {
     const [posts, setPosts] = useState([])
     const [country, setCountry] = useState('')
 
+    var list;
     useEffect(async() => {
         const result = await props.fetchPosts(country)
         if(result.data){
@@ -124,6 +125,8 @@ function HideOnScroll(props) {
         setSpinner(true);
         setCountry(e.target.value)
     }
+
+    
     
     if(!spinner){
         return (
@@ -151,11 +154,12 @@ function HideOnScroll(props) {
             </AppBar>
             </HideOnScroll>
           <div style={{height: '100vh', width: '600px', margin: "auto", overflow: 'scroll'}}>
-             { 
-                posts.length && posts.map((item) => {
-                    
-                    return <PostDetail item={item} />
-                })
+             {
+               posts.map((item) => {
+                 return (
+                   <PostDetail item={item} />
+                 );
+               })
              }
           </div>  
           </div>
