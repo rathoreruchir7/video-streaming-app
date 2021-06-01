@@ -76,6 +76,9 @@ postImageRouter.route('/')
             res.setHeader("Content-Type", "application/json");
             res.json(result.secure_url) 
         }
+        else{
+            console.log(result)
+        }
 
     // console.log(req.file)
     // const image={};
