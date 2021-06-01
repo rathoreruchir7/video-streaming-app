@@ -256,7 +256,7 @@ function Profile(props){
                     <nav style={{marginLeft: 'auto', marginTop: '20px', height: 'fit-content', weight: 'fit-content'}}>
                         <ul style={{listStyle: 'none', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around'}}>
                             <li style={{cursor: 'pointer'}} onClick={() => props.history.push('/posts')}>Home</li>
-                            <li style={{cursor: 'pointer'}} >Logout</li>
+                            <li style={{cursor: 'pointer'}} onClick={() => props.logoutUser(props.history)}>Logout</li>
                         </ul>
                     </nav>
                     <Dialog open={open} onClose={handleClose}>
