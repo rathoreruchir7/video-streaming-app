@@ -75,7 +75,6 @@ const useStyles = makeStyles((theme) => ({
 function PostDetail(props){
     const classes = useStyles()
     const [spinner, setSpinner] = useState(true)
-    console.log(props)
     useEffect(() => {
         if(props.item.user){
             setSpinner(false)

@@ -109,7 +109,6 @@ export const getProfile = (history) => (dispatch) => {
             }
         })
         .then((res) => {
-            console.log(res)
             if(res.data[0]){
                 dispatch(receiveProfile(res.data[0]))
                 history.push('/profile')

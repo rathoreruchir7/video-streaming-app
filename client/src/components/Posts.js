@@ -115,7 +115,6 @@ function HideOnScroll(props) {
     useEffect(async() => {
         const result = await props.fetchPosts(country)
         if(result.data){
-            console.log(result.data)
             setPosts(result.data)
             setSpinner(false)
         }
@@ -126,7 +125,6 @@ function HideOnScroll(props) {
         setCountry(e.target.value)
     }
     
-    console.log("POSTS->",posts)
     if(!spinner){
         return (
             <div>

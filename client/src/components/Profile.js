@@ -168,10 +168,7 @@ function Profile(props){
     const success=(pos)=> {
         var crd = pos.coords;
       
-        console.log('Your current position is:');
-        console.log(`Latitude : ${crd.latitude}`);
-        console.log(`Longitude: ${crd.longitude}`);
-        console.log(`More or less ${crd.accuracy} meters.`);
+       
       }
       
     const errorFunc=(err)=> {
@@ -184,17 +181,12 @@ function Profile(props){
         axios.get('https://ipapi.co/json/')
         .then(
             function success(response) {
-                console.log('User\'s Location Data is ', response.data.latitude, response.data.longitude);
-                console.log(response.data.country_name);
                 setLocation(response.data.country_name)
                 var location1 = response.data.country_name
                 const bearer = 'Bearer ' + localStorage.getItem('token');
-                console.log(props.auth.user._id)
                 
                 const formData = new FormData();
                 formData.append("imageFile", postImage)
-                console.log(postImage)
-                console.log(bearer)
                 axios({
                     url: '/postImage',
                     method: 'POST',
@@ -205,7 +197,6 @@ function Profile(props){
                     },
                 })
                 .then((res) => {
-                   console.log("POST URL-> ", res.data);
                    var postURL = res.data;
                    var date = new Date();
                    const payload = {
@@ -216,7 +207,6 @@ function Profile(props){
                        image: postURL,
                        date: date
                    }
-                   console.log(location)
                    axios({
                        url: '/posts',
                        method: "POST",
@@ -227,7 +217,6 @@ function Profile(props){
                     },
                    })
                    .then((res) => {
-                       console.log(res)
                        setText('')
                        setPostImage()
                        setFile('')

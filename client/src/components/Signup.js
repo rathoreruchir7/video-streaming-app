@@ -54,7 +54,6 @@ function Signup(props) {
 
     const handleSignup = () => {
         if (password == confirmPwd) {
-            console.log(props)
             props.signupUser({ username: username, name: name, password: password, email: username }, props.history);
         }
 
