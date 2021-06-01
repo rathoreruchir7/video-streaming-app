@@ -326,7 +326,7 @@ export const fetchPosts = (country) => (dispatch) => {
     })
     .then((res) => {
         dispatch(postPosts(res.data))
-        console.log(res)
+       
         return res
         
     })
