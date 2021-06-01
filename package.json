@@ -11,6 +11,7 @@
     "heroku-postbuild": "npm run install-client && npm run build"
   },
   "dependencies": {
+    "@material-ui/icons": "^4.11.2",
     "cloudinary": "^1.25.2",
     "concurrently": "^6.2.0",
     "cookie-parser": "~1.4.4",

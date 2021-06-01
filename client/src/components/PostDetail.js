@@ -13,8 +13,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { logoutUser, getProfile, uploadProfile, updateProfile } from '../redux/ActionCreators';
-import { DialogContentText } from '@material-ui/core';
-
+import { DialogContentText, ListItemAvatar } from '@material-ui/core';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -50,6 +51,9 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'space-around',
         alignItems: "flex-start",
         paddingLeft: "20px",
+        paddingTop: '20px',
+        paddingBottom: '50px',
+
         
     },
 
@@ -70,14 +74,18 @@ const useStyles = makeStyles((theme) => ({
 
 function PostDetail(props){
     const classes = useStyles()
-
+    console.log(props)
     return (
         <div className={classes.root}>
         <Paper className={classes.paper}>
-            <div>Username</div>
-            <div>Location</div>
-            <img src='#'></img>
-            <div>Text</div>
+            <div style={{marginBottom: '20px'}}>{props.item.userName}</div>
+            <div style={{marginBottom: '20px'}}>{props.item.location}</div>
+            <img src={props.item.image} style={{width: '80%', height: '80%', marginBottom: '20px'}}></img>
+            <div style={{marginBottom: '20px'}}>{props.item.text}</div>
+            <div>
+                <span style={{marginRight: '20px'}}><FavoriteBorderIcon /></span>
+                <span><ChatBubbleOutlineIcon /></span>
+            </div>
         </Paper>
         </div>
     );
