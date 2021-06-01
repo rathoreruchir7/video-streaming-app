@@ -181,13 +181,13 @@ function Profile(props){
     const handlePost = () => {
        if(localStorage.getItem("token")){
         setSpinner(true)
-        axios.get('http://ip-api.com/json')
+        axios.get('https://ipapi.co/json/')
         .then(
             function success(response) {
-                console.log('User\'s Location Data is ', response.data.lat, response.data.lon);
-                console.log(response.data.country);
-                setLocation(response.data.country)
-                var location1 = response.data.country
+                console.log('User\'s Location Data is ', response.data.latitude, response.data.longitude);
+                console.log(response.data.country_name);
+                setLocation(response.data.country_name)
+                var location1 = response.data.country_name
                 const bearer = 'Bearer ' + localStorage.getItem('token');
                 console.log(props.auth.user._id)
                 
