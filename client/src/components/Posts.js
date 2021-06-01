@@ -152,7 +152,8 @@ function HideOnScroll(props) {
             </HideOnScroll>
           <div style={{height: '100vh', width: '600px', margin: "auto", overflow: 'scroll'}}>
              { 
-                posts.map((item) => {
+                posts.length && posts.map((item) => {
+                    
                     return <PostDetail item={item} />
                 })
              }
