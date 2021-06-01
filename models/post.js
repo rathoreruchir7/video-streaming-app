@@ -24,6 +24,10 @@ var Post = new Schema({
     location: {
       type: String,
       default: ""
+  },
+  date: {
+    type: Date,
+    default: ""
   }
 });
 

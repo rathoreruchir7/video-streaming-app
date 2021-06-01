@@ -8,10 +8,11 @@ var authenticate = require('../authenticate');
 postRouter.use(bodyParser.json());
 /* GET users listing. */
 postRouter.get('/',authenticate.verifyUser, function(req, res, next) {
-    Post.find({})
+    Post.find({}).sort({ date: -1})
     .then((posts) => {
       res.statusCode=200;
       res.setHeader("Content-Type", "application/json");
+      console.log(posts)
       res.json(posts);
     }, (err) => 
       next(err))

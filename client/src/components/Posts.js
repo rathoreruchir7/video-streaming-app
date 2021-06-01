@@ -145,6 +145,9 @@ function HideOnScroll(props) {
                 <MenuItem value='France'>France</MenuItem>
                 <MenuItem value='Germany'>Germany</MenuItem>
             </Select>
+            <Typography >
+                <div style={{marginLeft: '20px', cursor: 'pointer'}} onClick={() => props.history.push('/profile')}>Profile</div>
+            </Typography>
               </Toolbar>
             </AppBar>
             </HideOnScroll>

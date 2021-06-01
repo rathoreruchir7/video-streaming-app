@@ -207,12 +207,14 @@ function Profile(props){
                 .then((res) => {
                    console.log("POST URL-> ", res.data);
                    var postURL = res.data;
+                   var date = new Date();
                    const payload = {
                        user: props.auth.user._id,
                        userName: name,
                        location: location1,
                        text: text,
-                       image: postURL
+                       image: postURL,
+                       date: date
                    }
                    console.log(location)
                    axios({
