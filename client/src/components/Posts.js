@@ -131,7 +131,7 @@ function HideOnScroll(props) {
             <HideOnScroll {...props}>
             <AppBar>
               <Toolbar>
-              
+              <Typography>Select Country</Typography>
               <Select
                 labelId="select-country"
                 id="select-country"

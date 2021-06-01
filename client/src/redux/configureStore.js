@@ -15,7 +15,7 @@ export const configureStore = () => {
             auth: Auth,
             posts: Posts
         }),
-        composeEnhancers(applyMiddleware(thunk,logger))
+        composeEnhancers(applyMiddleware(thunk))
         
     );
 
