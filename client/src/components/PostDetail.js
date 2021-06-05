@@ -52,11 +52,10 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         justifyContent: 'space-around',
         alignItems: "flex-start",
-        paddingLeft: "20px",
+        // paddingLeft: "20px",
         paddingTop: '20px',
         paddingBottom: '50px',
-
-        
+        cursor: 'pointer'
     },
 
     field: {
@@ -114,14 +113,16 @@ function PostDetail(props){
     if(!spinner){
         return (
             <div className={classes.root}>
-            <Paper className={classes.paper}>
-                <div style={{marginBottom: '20px', display: 'flex', alignItems: 'center'}}>
-                <Avatar src={`${props.item.user.avatar}`} style={{width: '40px', height: "40px", marginRight: '10px'}} />
-                 <div >{props.item.userName}</div>
+            <Paper className={classes.paper} elevation={0} onClick={(e) => e.target.style.backgroundColor="#d3d3d3"}>
+                <video src={props.item.video} controls loop onmouseover="this.play()" onmouseout="this.pause();" type="video/mp4" style={{width: '100%', height: '100%', marginBottom: '20px'}}></video>
+                <div style={{marginBottom: '10px', display: 'flex', alignItems: 'center'}}>
+                    <Avatar src={`${props.item.user.avatar}`} style={{width: '40px', height: "40px", marginRight: '10px'}} />
+                    <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start'}}>
+                        <div style={{marginBottom: '10px'}}>{props.item.text}</div>
+                    {/* <div style={{marginBottom: '20px'}}>{props.item.location}</div> */}
+                         <div style={{marginBottom: '0px', fontSize: '12px'}}>{props.item.userName}</div>
+                    </div>
                 </div>
-                <div style={{marginBottom: '20px'}}>{props.item.location}</div>
-                <video src={props.item.video} controls loop onmouseover="this.play()" onmouseout="this.pause();" type="video/mp4" style={{width: '80%', height: '80%', marginBottom: '20px'}}></video>
-                <div style={{marginBottom: '20px'}}>{props.item.text}</div>
                 <div style={{marginRight: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                     <span style={{marginRight: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center'}} onClick={() => postLike()}> { like?<FavoriteOutlinedIcon/> :<FavoriteBorderIcon />}<span>{likes}</span></span>
                     <span><ChatBubbleOutlineIcon /></span>

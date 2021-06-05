@@ -154,7 +154,7 @@ function HideOnScroll(props) {
             </AppBar>
             </HideOnScroll>
           <div style={{height: '100vh', width: '90%', margin: "auto", overflow: 'scroll'}}>
-            <Grid container spacing={3}>
+            <Grid container spacing={1}>
              {
                posts.map((item) => {
                  return (
