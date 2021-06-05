@@ -151,6 +151,7 @@ export const uploadError = (message) => {
 
 export const uploadProfile = (formData, history) => (dispatch) => {
     dispatch(requestUpload())
+    console.log(formData)
     if(localStorage.getItem("token")){
         const bearer = 'Bearer ' + localStorage.getItem('token');
        return axios({
@@ -196,6 +197,7 @@ export const updateError = (message) => {
 
 export const updateProfile = (payload, history) => (dispatch) => {
     dispatch(requestUpdate())
+    console.log(payload)
     if(localStorage.getItem("token")){
         const bearer = 'Bearer ' + localStorage.getItem('token');
         return axios({

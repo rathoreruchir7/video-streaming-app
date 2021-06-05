@@ -115,7 +115,7 @@ function Profile(props){
     const handleSave=()=>{
         setSpinner(true)
         const formData = new FormData();
-        formData.append("videoFile", profile)
+        formData.append("imageFile", profile)
         if(profile){
           
             // console.log(spinner)

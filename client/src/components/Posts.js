@@ -19,6 +19,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Avatar from '@material-ui/core/Avatar';
+import Grid from '@material-ui/core/Grid';
 
 
 
@@ -152,14 +153,18 @@ function HideOnScroll(props) {
               </Toolbar>
             </AppBar>
             </HideOnScroll>
-          <div style={{height: '100vh', width: '600px', margin: "auto", overflow: 'scroll'}}>
+          <div style={{height: '100vh', width: '90%', margin: "auto", overflow: 'scroll'}}>
+            <Grid container spacing={3}>
              {
                posts.map((item) => {
                  return (
-                   <PostDetail item={item} />
+                   <Grid item xs={12} sm={4} lg={3}>
+                      <PostDetail item={item} />
+                   </Grid>
                  );
                })
              }
+             </Grid>
           </div>  
           </div>
         );

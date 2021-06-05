@@ -83,7 +83,7 @@ postRouter.route('/:postId')
 
 /*****************************Post Comments*************************** */
 postRouter.route('/:postId/comments')
-get((req,res,next) => {
+.get((req,res,next) => {
   Post.findById(req.params.postId)
   .populate('comments.author')
   .then((post) => {
@@ -271,7 +271,7 @@ postRouter.route('/:postId/comments/:commentId')
 
 /******************Post Likes************************ */
 postRouter.route('/:postId/likes')
-get((req,res,next) => {
+.get((req,res,next) => {
   Post.findById(req.params.postId)
   .populate('likes.author')
   .then((post) => {

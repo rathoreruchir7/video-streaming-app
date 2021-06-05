@@ -15,7 +15,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { logoutUser, getProfile, uploadProfile, updateProfile } from '../redux/ActionCreators';
 import { DialogContentText, ListItemAvatar } from '@material-ui/core';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteOutlinedIcon from '@material-ui/icons/FavoriteOutlined';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+import { ContactSupportOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -63,9 +65,6 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'space-around',
         alignItems: "center",
     },
-
- 
-
     inputStyle: {
         // fontWeight: 'bold'
     }
@@ -75,12 +74,43 @@ const useStyles = makeStyles((theme) => ({
 function PostDetail(props){
     const classes = useStyles()
     const [spinner, setSpinner] = useState(true)
+    const [like, setLike] = useState(false)
+    const [likes, setLikes] = useState(0)
     useEffect(() => {
         if(props.item.user){
+            setLikes(props.item.likes.length)  
+            const getLike = props.item.likes.filter((item) => {
+                if(item.author===props.item.user._id)
+                    {
+                        console.log(item)
+                        return item;
+                    }
+            })
+            
             setSpinner(false)
+
         }
     },[])
 
+    const postLike = () => {
+        setLike(!like)
+        console.log(like)
+        const bearer = 'Bearer ' + localStorage.getItem('token');
+        const payload = {
+            like: like
+        }
+        console.log("PAYLOAD->", payload)
+        axios({
+            url: `posts/${props.item._id}/likes`,
+            method: "POST",
+            data: payload,
+            headers: {Authorization: bearer }
+        })
+        .then((res) => {
+            console.log(res)
+        })
+        .catch((err) => console.log(err))
+    }
     if(!spinner){
         return (
             <div className={classes.root}>
@@ -90,10 +120,10 @@ function PostDetail(props){
                  <div >{props.item.userName}</div>
                 </div>
                 <div style={{marginBottom: '20px'}}>{props.item.location}</div>
-                <video src={props.item.image} controls type="video/mp4" style={{width: '80%', height: '80%', marginBottom: '20px'}}></video>
+                <video src={props.item.video} controls loop onmouseover="this.play()" onmouseout="this.pause();" type="video/mp4" style={{width: '80%', height: '80%', marginBottom: '20px'}}></video>
                 <div style={{marginBottom: '20px'}}>{props.item.text}</div>
-                <div>
-                    <span style={{marginRight: '20px'}}><FavoriteBorderIcon /></span>
+                <div style={{marginRight: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                    <span style={{marginRight: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center'}} onClick={() => postLike()}> { like?<FavoriteOutlinedIcon/> :<FavoriteBorderIcon />}<span>{likes}</span></span>
                     <span><ChatBubbleOutlineIcon /></span>
                 </div>
             </Paper>
