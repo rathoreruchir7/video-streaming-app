@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 import Login from './Login';
 import Signup from './Signup';
 import Profile from './Profile';
-import Posts from './Posts'
+import Posts from './Posts';
+import VideoComponent from './VideoComponent'
 
 const mapStateToProps = state => {
     return {
@@ -36,6 +37,7 @@ function Main(props){
                 <Route exact path = '/signup' component= {(props) => ( <Signup signupUser={props.signupUser}  /> )} />
                 <Route exact path = '/profile' component={(props) => (<Profile {...props}/> )} />
                 <Route exact path = '/posts' component={(props) => (<Posts {...props}/> )} />
+                <Route exact path = '/posts/:id' component={(props) => (<VideoComponent {...props}/> )} />
                 <Redirect to = '/login' />
              </Switch>
        

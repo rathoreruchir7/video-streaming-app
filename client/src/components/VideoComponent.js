@@ -20,8 +20,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
-
-
+import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -106,35 +105,32 @@ function HideOnScroll(props) {
     window: PropTypes.func,
   };
 
-  function Posts(props){
 
+function VideoComponent(props){
     const classes = useStyles()
     const [spinner, setSpinner] = useState(true)
-    const [posts, setPosts] = useState([])
-    const [country, setCountry] = useState('')
 
-    var list;
     useEffect(async() => {
-        const result = await props.fetchPosts(country)
+        const bearer = 'Bearer ' + localStorage.getItem('token');
+        const result = await axios({
+            url: `/posts/${props.match.params.id}`,
+            method: "GET",
+            headers: {Authorization: bearer }
+        })
+
         if(result.data){
-            setPosts(result.data)
+            console.log(result.data)
             setSpinner(false)
         }
-    },[country])
+    })
 
-    const handleSelectChange = (e) => {
-        setSpinner(true);
-        setCountry(e.target.value)
-    }
-
-    
     if(!spinner){
         return (
             <div>
             <HideOnScroll {...props}>
             <AppBar>
               <Toolbar>
-              <Typography>Select Country</Typography>
+              {/* <Typography>Select Country</Typography>
               <Select
                 labelId="select-country"
                 id="select-country"
@@ -146,26 +142,14 @@ function HideOnScroll(props) {
                 <MenuItem value='China'>China</MenuItem>
                 <MenuItem value='France'>France</MenuItem>
                 <MenuItem value='Germany'>Germany</MenuItem>
-            </Select>
+            </Select> */}
             <Typography >
                 <div style={{marginLeft: '20px', cursor: 'pointer'}} onClick={() => props.history.push('/profile')}>Profile</div>
             </Typography>
               </Toolbar>
             </AppBar>
             </HideOnScroll>
-          <div style={{height: '100vh', width: '90%', margin: "auto", overflow: 'scroll'}}>
-            <Grid container spacing={1}>
-             {
-               posts.map((item) => {
-                 return (
-                   <Grid item xs={12} sm={4} lg={3} >
-                      <PostDetail item={item} {...props}/>
-                   </Grid>
-                 );
-               })
-             }
-             </Grid>
-          </div>  
+          
           </div>
         );
     }
@@ -177,20 +161,7 @@ function HideOnScroll(props) {
             </div>        
              );
     }
-    
-  }
 
-const mapStateToProps = state => {
-    return {
-        auth: state.auth,
-        posts: state.posts
-    }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-   
-    fetchPosts: (country) => dispatch((fetchPosts(country))),
-   
-})
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Posts))
+export default VideoComponent

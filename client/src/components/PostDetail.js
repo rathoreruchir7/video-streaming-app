@@ -90,7 +90,7 @@ function PostDetail(props){
 
         }
     },[])
-
+    
     const dateFunc = () => {
         const postDate = new Date(`${props.item.date}`);
         const curr_date = new Date();
@@ -135,7 +135,7 @@ function PostDetail(props){
     if(!spinner){
         return (
             <div className={classes.root}>
-            <Paper className={classes.paper} elevation={0} onClick={(e) => e.target.style.backgroundColor="#d3d3d3"}>
+            <Paper className={classes.paper} elevation={0} onClick={(e) => {e.target.style.backgroundColor="#d3d3d3"; props.history.push(`/posts/${props.item._id}`)}}>
                 <video src={props.item.video} controls loop onmouseover="this.play()" onmouseout="this.pause();" type="video/mp4" style={{width: '100%', height: '100%', marginBottom: '20px'}}></video>
                 <div style={{marginBottom: '2px', display: 'flex', alignItems: 'center'}}>
                     <Avatar src={`${props.item.user.avatar}`} style={{width: '40px', height: "40px", marginRight: '10px'}} />
