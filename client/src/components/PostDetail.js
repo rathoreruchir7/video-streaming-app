@@ -91,6 +91,28 @@ function PostDetail(props){
         }
     },[])
 
+    const dateFunc = () => {
+        const postDate = new Date(`${props.item.date}`);
+        const curr_date = new Date();
+        const diff = (curr_date-postDate)/1000;
+        console.log("DIFF->", diff/1000);
+        console.log("CURr DATE->", curr_date)
+
+        if(diff>12*30*24*3600)
+            return `${Math.round(diff/12*30*24*3600)} yr`;
+        else if(diff>30*24*3600)
+            return `${Math.round(diff/30*24*3600)} months`;
+        else if(diff>24*3600)
+            return `${Math.round(diff/24*3600)} days`;
+        else if(diff>3600)
+            return `${Math.round(diff/3600)} hours`;
+        else if(diff>60)
+            return `${Math.round(diff/60)} minutes`;
+    }
+    
+    console.log(dateFunc())
+    
+    
     const postLike = () => {
         setLike(!like)
         console.log(like)
@@ -115,17 +137,17 @@ function PostDetail(props){
             <div className={classes.root}>
             <Paper className={classes.paper} elevation={0} onClick={(e) => e.target.style.backgroundColor="#d3d3d3"}>
                 <video src={props.item.video} controls loop onmouseover="this.play()" onmouseout="this.pause();" type="video/mp4" style={{width: '100%', height: '100%', marginBottom: '20px'}}></video>
-                <div style={{marginBottom: '10px', display: 'flex', alignItems: 'center'}}>
+                <div style={{marginBottom: '2px', display: 'flex', alignItems: 'center'}}>
                     <Avatar src={`${props.item.user.avatar}`} style={{width: '40px', height: "40px", marginRight: '10px'}} />
-                    <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start'}}>
-                        <div style={{marginBottom: '10px'}}>{props.item.text}</div>
+                    <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'flex-start'}}>
+                        <div style={{marginBottom: '10px', fontWeight: "bold"}}>{props.item.text}</div>
                     {/* <div style={{marginBottom: '20px'}}>{props.item.location}</div> */}
-                         <div style={{marginBottom: '0px', fontSize: '12px'}}>{props.item.userName}</div>
+                         <div style={{marginBottom: '0px', fontSize: '14px'}}>{props.item.userName}</div>
                     </div>
                 </div>
-                <div style={{marginRight: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                <div style={{marginRight: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '14px'}}>
                     <span style={{marginRight: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center'}} onClick={() => postLike()}> { like?<FavoriteOutlinedIcon/> :<FavoriteBorderIcon />}<span>{likes}</span></span>
-                    <span><ChatBubbleOutlineIcon /></span>
+                    <span>{`${dateFunc()} ago`}</span>
                 </div>
             </Paper>
             </div>
