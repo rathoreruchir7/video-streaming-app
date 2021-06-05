@@ -9,8 +9,8 @@ const cloudinary = require("cloudinary");
 const {CloudinaryStorage} = require("multer-storage-cloudinary");
 
 
-const postImageRouter = express.Router();
-postImageRouter.use(bodyParser.json());
+const postVideoRouter = express.Router();
+postVideoRouter.use(bodyParser.json());
 
 
 cloudinary.config({
@@ -30,18 +30,18 @@ var storage = multer.diskStorage({ })
 //     });
 
 
- const imageFilter = (req,file,cb) => {
+ const videoFilter = (req,file,cb) => {
      
-     if(!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)){
+     if(!file.originalname.match(/\.(mp4)$/)){
          return cb(new Error("You can upload only image files!"),false);
      }
      console.log(file)
      cb(null, true);
  }
 
-const upload = multer({ storage: storage, fileFilter: imageFilter})
+const upload = multer({ storage: storage, fileFilter: videoFilter})
 
-postImageRouter.route('/')
+postVideoRouter.route('/')
 .get(authenticate.verifyUser,(req, res, next) => {
     res.statusCode = 403;
     res.end('GET operation not supported on /imageUpload');
@@ -54,7 +54,7 @@ postImageRouter.route('/')
     res.statusCode = 403;
     res.end('DELETE operation not supported on /imageUplaod');
 })
-.post(authenticate.verifyUser, upload.single('imageFile'), async (req, res) => {
+.post(authenticate.verifyUser, upload.single('videoFile'), async (req, res) => {
     
     var publicId = `samples/${req.user.id}`;
     // cloudinary.image(req.file.path, {secure: true, transformation: [
@@ -66,7 +66,7 @@ postImageRouter.route('/')
     //     ]})
 
         const result =  await cloudinary.v2.uploader.upload(req.file.path, 
-        {resource_type: "image", public_id: publicId,
+        {resource_type: "video", public_id: publicId,
         overwrite: true, },
         function(error, result) {console.log(result, error)});
         
@@ -86,4 +86,4 @@ postImageRouter.route('/')
     // image.id = req.file.public_id;
 })
 
-module.exports = postImageRouter;
+module.exports = postVideoRouter;
