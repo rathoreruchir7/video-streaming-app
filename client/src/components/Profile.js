@@ -81,7 +81,7 @@ function Profile(props){
     const [file, setFile] = useState('')
     const [text, setText] = useState('')
     const [location, setLocation] = useState('')
-    const [postImage, setPostImage] = useState()
+    const [postVideo, setPostVideo] = useState()
  
     useEffect(() => {
        
@@ -115,7 +115,7 @@ function Profile(props){
     const handleSave=()=>{
         setSpinner(true)
         const formData = new FormData();
-        formData.append("imageFile", profile)
+        formData.append("videoFile", profile)
         if(profile){
           
             // console.log(spinner)
@@ -156,7 +156,7 @@ function Profile(props){
 
     const handleInputFile = (e) => {
         setFile(URL.createObjectURL(e.target.files[0]))
-        setPostImage(e.target.files[0])
+        setPostVideo(e.target.files[0])
     }
 
     var options = {
@@ -186,9 +186,9 @@ function Profile(props){
                 const bearer = 'Bearer ' + localStorage.getItem('token');
                 
                 const formData = new FormData();
-                formData.append("imageFile", postImage)
+                formData.append("videoFile", postVideo)
                 axios({
-                    url: '/postImage',
+                    url: '/postVideo',
                     method: 'POST',
                     data: formData,
                     headers: {
@@ -204,7 +204,7 @@ function Profile(props){
                        userName: name,
                        location: location1,
                        text: text,
-                       image: postURL,
+                       video: postURL,
                        date: date
                    }
                    axios({
@@ -218,7 +218,7 @@ function Profile(props){
                    })
                    .then((res) => {
                        setText('')
-                       setPostImage()
+                       setPostVideo()
                        setFile('')
                        handleClose1()
                        setSpinner(false)
@@ -254,8 +254,8 @@ function Profile(props){
                     <Dialog open={open1} onClose={handleClose1}  >
                         <DialogTitle>Create Post</DialogTitle>
                         <DialogContent style={{display: 'flex', flexDirection: 'column', flexWrap: 'wrap', justifyContent: 'center'}}>
-                            <input type='file' name='imageFile' id='imageFile' onChange={(e) => handleInputFile(e)} />
-                            <img src={file} style={{marginTop: '20px', height: '200px', width: '200px'}} />
+                            <input type='file' name='videoFile' id='videoFile' onChange={(e) => handleInputFile(e)} />
+                            <video src={file} style={{marginTop: '20px', height: '200px', width: '200px'}} />
                             <label for='text' style={{marginTop: '20px'}}>Describe</label><input type='textarea' id='text' name='text'   onChange={(e) => {setText(e.target.value)} } />
                         </DialogContent>
                         <DialogActions><Button variant='contained' color='primary' onClick={handlePost}>Post</Button></DialogActions>

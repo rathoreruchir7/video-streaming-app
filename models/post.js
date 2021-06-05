@@ -2,6 +2,36 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose');
 
+var commentSchema = new Schema({
+  
+  comment:  {
+      type: String,
+      required: true
+  },
+  author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+  }
+}, {
+  timestamps: true
+});
+
+var likeSchema = new Schema({
+  
+  like:  {
+      type: Boolean,
+      required: false
+  },
+  author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+  }
+}, {
+  timestamps: true
+});
+
+
+
 var Post = new Schema({
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -13,7 +43,7 @@ var Post = new Schema({
         default: ''
     },
 
-    image: {
+    video: {
       type: String,
         default: ''
     },
@@ -28,7 +58,11 @@ var Post = new Schema({
   date: {
     type: Date,
     default: ""
-  }
+  },
+
+  comments:[commentSchema],
+  likes: [likeSchema]
+
 });
 
 

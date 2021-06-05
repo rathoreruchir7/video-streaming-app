@@ -90,7 +90,7 @@ function PostDetail(props){
                  <div >{props.item.userName}</div>
                 </div>
                 <div style={{marginBottom: '20px'}}>{props.item.location}</div>
-                <img src={props.item.image} style={{width: '80%', height: '80%', marginBottom: '20px'}}></img>
+                <video src={props.item.image} controls type="video/mp4" style={{width: '80%', height: '80%', marginBottom: '20px'}}></video>
                 <div style={{marginBottom: '20px'}}>{props.item.text}</div>
                 <div>
                     <span style={{marginRight: '20px'}}><FavoriteBorderIcon /></span>

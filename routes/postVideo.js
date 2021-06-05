@@ -32,8 +32,8 @@ var storage = multer.diskStorage({ })
 
  const videoFilter = (req,file,cb) => {
      
-     if(!file.originalname.match(/\.(mp4)$/)){
-         return cb(new Error("You can upload only image files!"),false);
+     if(!file.originalname.match(/\.(mp4|MPEG-4|mkv)$/)){
+         return cb(new Error("You can upload only video files!"),false);
      }
      console.log(file)
      cb(null, true);
