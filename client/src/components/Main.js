@@ -37,7 +37,7 @@ function Main(props){
                 <Route exact path = '/signup' component= {(props) => ( <Signup signupUser={props.signupUser}  /> )} />
                 <Route exact path = '/profile' component={(props) => (<Profile {...props}/> )} />
                 <Route exact path = '/posts' component={(props) => (<Posts {...props}/> )} />
-                <Route exact path = '/posts/:id' component={(props) => (<VideoComponent {...props}/> )} />
+                <Route exact path= '/videos/:id' component={(props) => (<VideoComponent {...props}/> )} />
                 <Redirect to = '/login' />
              </Switch>
        

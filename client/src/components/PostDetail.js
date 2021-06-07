@@ -95,19 +95,20 @@ function PostDetail(props){
         const postDate = new Date(`${props.item.date}`);
         const curr_date = new Date();
         const diff = (curr_date-postDate)/1000;
-        console.log("DIFF->", diff/1000);
-        console.log("CURr DATE->", curr_date)
-
+        
+       
         if(diff>12*30*24*3600)
-            return `${Math.round(diff/12*30*24*3600)} yr`;
+            return `${Math.round(diff/(12*30*24*3600))} yr`;
         else if(diff>30*24*3600)
-            return `${Math.round(diff/30*24*3600)} months`;
+            return `${Math.round(diff/(30*24*3600))} months`;
         else if(diff>24*3600)
-            return `${Math.round(diff/24*3600)} days`;
+            return `${Math.round(diff/(24*3600))} days`;
         else if(diff>3600)
-            return `${Math.round(diff/3600)} hours`;
+            return `${Math.round(diff/(3600))} hours`;
         else if(diff>60)
             return `${Math.round(diff/60)} minutes`;
+        else if(diff<60)
+        return `${Math.round(diff)} seconds`;
     }
     
     console.log(dateFunc())
@@ -135,8 +136,8 @@ function PostDetail(props){
     if(!spinner){
         return (
             <div className={classes.root}>
-            <Paper className={classes.paper} elevation={0} onClick={(e) => {e.target.style.backgroundColor="#d3d3d3"; props.history.push(`/posts/${props.item._id}`)}}>
-                <video src={props.item.video} controls loop onmouseover="this.play()" onmouseout="this.pause();" type="video/mp4" style={{width: '100%', height: '100%', marginBottom: '20px'}}></video>
+            <Paper className={classes.paper} elevation={0} onClick={(e) => {e.target.style.backgroundColor="#d3d3d3"; props.history.push(`/videos/${props.item._id}`)}}>
+                <video src={props.item.video}  loop onmouseover="this.play()" onmouseout="this.pause();" type="video/mp4" style={{width: '100%', height: '100%', marginBottom: '20px'}}></video>
                 <div style={{marginBottom: '2px', display: 'flex', alignItems: 'center'}}>
                     <Avatar src={`${props.item.user.avatar}`} style={{width: '40px', height: "40px", marginRight: '10px'}} />
                     <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'flex-start'}}>

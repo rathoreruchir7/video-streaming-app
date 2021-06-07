@@ -13,8 +13,15 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { logoutUser, getProfile, uploadProfile, updateProfile } from '../redux/ActionCreators';
-import { DialogContentText } from '@material-ui/core';
-
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import useScrollTrigger from '@material-ui/core/useScrollTrigger';
+import PropTypes from 'prop-types';
+import Slide from '@material-ui/core/Slide';
+import logo from '../cipher-school.png'
+import HomeIcon from '@material-ui/icons/Home';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -64,6 +71,29 @@ const useStyles = makeStyles((theme) => ({
         // fontWeight: 'bold'
     }
 }));
+
+function HideOnScroll(props) {
+    const { children, window } = props;
+    // Note that you normally won't need to set the window ref as useScrollTrigger
+    // will default to window.
+    // This is only being set here because the demo is in an iframe.
+    const trigger = useScrollTrigger({ target: window ? window() : undefined });
+  
+    return (
+      <Slide appear={false} direction="down" in={!trigger}>
+        {children}
+      </Slide>
+    );
+  }
+  
+  HideOnScroll.propTypes = {
+    children: PropTypes.element.isRequired,
+    /**
+     * Injected by the documentation to work in an iframe.
+     * You won't need it on your project.
+     */
+    window: PropTypes.func,
+  };
 
 
 function Profile(props){
@@ -241,13 +271,30 @@ function Profile(props){
     }
         if(!spinner){
             return (
-                <div className={classes.root} style={{marginTop: '0px'}}>
-                    <nav style={{marginLeft: 'auto', marginTop: '20px', height: 'fit-content', weight: 'fit-content'}}>
-                        <ul style={{listStyle: 'none', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around'}}>
-                            <li style={{cursor: 'pointer'}} onClick={() => props.history.push('/posts')}>Home</li>
-                            <li style={{cursor: 'pointer'}} onClick={() => props.logoutUser(props.history)}>Logout</li>
-                        </ul>
-                    </nav>
+                <div>
+                    <HideOnScroll {...props}>
+                    <AppBar style={{backgroundColor: '#fff', display: 'flex', justifyContent: 'space-between'}} >
+                    <Toolbar>
+                        <Typography>
+                            <img src={logo} style={{height: '80px', width: '80px', cursor: 'pointer'}} onClick={() => props.history.push('/posts')}></img>
+                            
+                        </Typography>
+                        <Typography style={{fontFamily: 'monospace', color: '#3a0d63', fontSize: '30px', cursor: 'pointer'}} onClick={() => props.history.push('/posts')}>
+                            Cipher Schools
+                        </Typography>
+                        <Typography style={{marginLeft: 'auto', cursor: 'pointer', color: 'black'}} onClick={() => props.history.push('/posts')}>
+                            <HomeIcon />
+                        </Typography>
+                        <Typography style={{marginLeft: '10px', cursor: 'pointer', color: 'black'}} onClick={() => props.logoutUser(props.history)}>
+                            <ExitToAppIcon />
+                        </Typography>
+                    </Toolbar>
+                    
+                    </AppBar>
+                    </HideOnScroll>
+                <div className={classes.root} style={{marginTop: '100px'}}>
+                    
+                   
                     <Dialog open={open} onClose={handleClose}>
                         <Avatar alt={name} src={`${avatar}`} style={{width: '100%', height: "100%"}} variant="square" />
                     </Dialog>
@@ -272,6 +319,7 @@ function Profile(props){
                     </Paper>
                    
                    
+                </div>
                 </div>
             );
         }

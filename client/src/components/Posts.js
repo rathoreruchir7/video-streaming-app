@@ -20,6 +20,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
+import logo from '../cipher-school.png'
 
 
 
@@ -126,31 +127,27 @@ function HideOnScroll(props) {
         setSpinner(true);
         setCountry(e.target.value)
     }
-
+    
+    console.log(props.auth)
     
     if(!spinner){
         return (
             <div>
             <HideOnScroll {...props}>
-            <AppBar>
+              <AppBar style={{backgroundColor: '#fff', display: 'flex', justifyContent: 'space-between'}} >
               <Toolbar>
-              <Typography>Select Country</Typography>
-              <Select
-                labelId="select-country"
-                id="select-country"
-                value={country}
-                onChange={handleSelectChange}
-                >
-                <MenuItem value='' selected={true}>All</MenuItem>
-                <MenuItem value='India'>India</MenuItem>
-                <MenuItem value='China'>China</MenuItem>
-                <MenuItem value='France'>France</MenuItem>
-                <MenuItem value='Germany'>Germany</MenuItem>
-            </Select>
-            <Typography >
-                <div style={{marginLeft: '20px', cursor: 'pointer'}} onClick={() => props.history.push('/profile')}>Profile</div>
-            </Typography>
+                  <Typography>
+                      <img src={logo} style={{height: '80px', width: '80px', cursor: 'pointer'}}></img>
+                      
+                  </Typography>
+                <Typography style={{fontFamily: 'monospace', color: '#3a0d63', fontSize: '30px', cursor: 'pointer'}}>
+                      Cipher Schools
+                </Typography>
+                <Typography style={{marginLeft: 'auto', cursor: 'pointer', color: 'black'}} onClick={() => props.history.push('/profile')}>
+                    <Avatar src={`${props.auth.user.avatar}`} style={{width: '40px', height: "40px"}}/>
+                </Typography>
               </Toolbar>
+             
             </AppBar>
             </HideOnScroll>
           <div style={{height: '100vh', width: '90%', margin: "auto", overflow: 'scroll'}}>
@@ -158,7 +155,7 @@ function HideOnScroll(props) {
              {
                posts.map((item) => {
                  return (
-                   <Grid item xs={12} sm={4} lg={3} >
+                   <Grid item xs={12} sm={4} lg={3} style={{height: '300px'}}>
                       <PostDetail item={item} {...props}/>
                    </Grid>
                  );

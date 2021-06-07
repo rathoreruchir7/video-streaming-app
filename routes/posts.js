@@ -31,25 +31,28 @@ postRouter.post('/', authenticate.verifyUser, (req, res, next) => {
     .catch((err) => next(err));
 })
 
-postRouter.get('/:country', authenticate.verifyUser, (req, res, next) => {
-    Post.find({ location: req.params.country })
-    .populate('user')
-    .then((posts) => {
-      res.statusCode=200;
-      res.setHeader("Content-Type", "application/json");
-      res.json(posts);
-    }, (err) => 
-      next(err))
-    .catch((err) => next(err));
-})
+// postRouter.get('/:country', authenticate.verifyUser, (req, res, next) => {
+//     Post.find({ location: req.params.country })
+//     .populate('user')
+//     .then((posts) => {
+//       res.statusCode=200;
+//       res.setHeader("Content-Type", "application/json");
+//       res.json(posts);
+//     }, (err) => 
+//       next(err))
+//     .catch((err) => next(err));
+// })
 
 /***************************Post Id****************** */
 postRouter.route('/:postId')
 .get(authenticate.verifyUser, (req, res, next) => {
+    console.log("POST_D=> ",req.params.postId)
   Post.find({ _id: req.params.postId })
+  .populate('user')
   .populate('comments.author')
   .then((post) => {
     res.statusCode = 200;
+    console.log("POST->", post)
     res.setHeader('Content-Type', 'application/json');
     res.json(post);
   }, (err) => next(err))
