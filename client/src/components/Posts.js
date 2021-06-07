@@ -137,10 +137,10 @@ function HideOnScroll(props) {
               <AppBar style={{backgroundColor: '#fff', display: 'flex', justifyContent: 'space-between'}} >
               <Toolbar>
                   <Typography>
-                      <img src={logo} style={{height: '80px', width: '80px', cursor: 'pointer'}}></img>
+                      <img src={logo} style={{height: '80px', width: '80px', cursor: 'pointer'}} onClick={() => props.history.push('/posts')}></img>
                       
                   </Typography>
-                <Typography style={{fontFamily: 'monospace', color: '#3a0d63', fontSize: '30px', cursor: 'pointer'}}>
+                <Typography style={{fontFamily: 'monospace', color: '#3a0d63', fontSize: '30px', cursor: 'pointer' }} onClick={() => props.history.push('/posts')}>
                       Cipher Schools
                 </Typography>
                 <Typography style={{marginLeft: 'auto', cursor: 'pointer', color: 'black'}} onClick={() => props.history.push('/profile')}>

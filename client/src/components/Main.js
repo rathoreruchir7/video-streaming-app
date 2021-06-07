@@ -7,7 +7,8 @@ import Login from './Login';
 import Signup from './Signup';
 import Profile from './Profile';
 import Posts from './Posts';
-import VideoComponent from './VideoComponent'
+import VideoComponent from './VideoComponent';
+import ChannelVideos from './ChannelVideos';
 
 const mapStateToProps = state => {
     return {
@@ -38,6 +39,8 @@ function Main(props){
                 <Route exact path = '/profile' component={(props) => (<Profile {...props}/> )} />
                 <Route exact path = '/posts' component={(props) => (<Posts {...props}/> )} />
                 <Route exact path= '/videos/:id' component={(props) => (<VideoComponent {...props}/> )} />
+                <Route exact path= '/channel/:id' component={(props) => (<ChannelVideos {...props}/> )} />
+
                 <Redirect to = '/login' />
              </Switch>
        
