@@ -63,7 +63,7 @@ function Signup(props) {
     }
     return (
         <div className={classes.root}>
-            <header style={{ marginTop: '-30px', marginBottom: '50px', width: '100%', height: '20%', fontSize: '40px', color: '#dc143c', fontFamily: 'monospace' }}>LT-LGTime</header>
+            <header style={{ marginTop: '-30px', marginBottom: '50px', width: '100%', height: '20%', fontSize: '40px', color: '#dc143c', fontFamily: 'monospace' }}>CipherSchools-Video-App</header>
             <Paper className={classes.paper} >
                 <div className={classes.field}><TextField id="name" name="name" label="Name*" variant="outlined" onChange={(e) => setName(e.target.value)} /></div>
                 <div className={classes.field}><TextField id="username" name="username" label="Email*" variant="outlined" onChange={(e) => setUsername(e.target.value)} /></div>

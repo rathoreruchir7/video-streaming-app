@@ -21,6 +21,7 @@ import Select from '@material-ui/core/Select';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import logo from '../cipher-school.png'
+import axios from 'axios';
 
 
 
@@ -112,20 +113,28 @@ function HideOnScroll(props) {
     const classes = useStyles()
     const [spinner, setSpinner] = useState(true)
     const [posts, setPosts] = useState([])
-    const [country, setCountry] = useState('')
+    const [avatar, setAvatar] = useState('')
 
     var list;
     useEffect(async() => {
-        const result = await props.fetchPosts(country)
+
+        const bearer = 'Bearer ' + localStorage.getItem('token');
+        const result = await axios({
+          url: `/channel/${props.match.params.id}`,
+          method: "GET",
+          headers: {Authorization: bearer }
+        })
+       
         if(result.data){
-            setPosts(result.data)
-            setSpinner(false)
+          console.log(result.data);
+          setSpinner(false)
+          setPosts(result.data)
+          setAvatar(result.data[0].user.avatar)
         }
-    },[country])
+    },[])
 
     const handleSelectChange = (e) => {
         setSpinner(true);
-        setCountry(e.target.value)
     }
     
     console.log(props.auth)

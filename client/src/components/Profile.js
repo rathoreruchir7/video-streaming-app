@@ -313,7 +313,7 @@ function Profile(props){
                        <div className={classes.field}>Email: <input  className={classes.inputStyle} id="email" name="email" value={email} disabled={isDisabled} onChange={(e) => setEmail(e.target.value)} /></div>
         
                        <div className={classes.field}><Button variant="contained" color="primary"  disabled={edit} onClick={handleEdit} >Edit</Button><Button variant="contained" color="primary" onClick={handleSave} disabled={isDisabled}>Save</Button>  <Button variant="contained" color="primary" onClick={handleCreatePost}>
-                        Create Post 
+                        Upload Video
                     </Button></div>
                        {/* <span onClick={() => props.logoutUser(props.history)} style={{fontWeight: "bold", cursor: "pointer"}}>Logout</span> */}
                     </Paper>

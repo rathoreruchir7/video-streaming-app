@@ -43,6 +43,8 @@ postRouter.post('/', authenticate.verifyUser, (req, res, next) => {
 //     .catch((err) => next(err));
 // })
 
+
+
 /***************************Post Id****************** */
 postRouter.route('/:postId')
 .get(authenticate.verifyUser, (req, res, next) => {
@@ -155,6 +157,7 @@ postRouter.route('/:postId/comments')
   }, (err) => next(err))
   .catch((err) => next(err));    
 });
+
 
 
 /*****************************Post Comment Id **********************/
@@ -344,6 +347,20 @@ postRouter.route('/:postId/likes')
   .catch((err) => next(err));    
 });
 
+
+postRouter.route('/channel/:id')
+.get(authenticate.verifyUser, (req, res, next) => {
+    Post.find({ user: req.params.id })
+    .populate('user')
+    .populate('comments.author')
+    .then((post) => {
+      res.statusCode = 200;
+      console.log("POST->", post)
+      res.setHeader('Content-Type', 'application/json');
+      res.json(post);
+    }, (err) => next(err))
+    .catch((err) => next(err));
+})
 
 
 module.exports = postRouter
